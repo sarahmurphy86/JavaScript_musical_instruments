@@ -34,7 +34,17 @@ InstrumentFamilies.prototype.bindEvents = function(){
   PubSub.publish('InstrumentFamilies:all-instruments-ready', this.instrumentFamilies);
   console.log(this.instrumentFamilies);
 
+  PubSub.subscribe('SelectView:instrument-information', (event) => {
+  const selectedIndex = event.detail;
+  console.log(selectedIndex);
+  this.publishInstrumentFamilyDetail(selectedIndex);
+  });
 };
 
+InstrumentFamilies.prototype.publishInstrumentFamilyDetail = function(instrumentIndex){
+  const selectedInstrumentFamily = this.instrumentFamilies[instrumentIndex];
+  console.log(selectedInstrumentFamily);
+  PubSub.publish('InstrumentFamilies:selected-instrument-ready', selectedInstrumentFamily)
+};
 
 module.exports = InstrumentFamilies;
